@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-package:
-    name: Build a the Grasshopper package
+    name: Build the Grasshopper package
     runs-on: windows-latest
 
     steps:
@@ -20,6 +20,6 @@ jobs:
     - name: Nuget Restore 
       run: nuget restore .\Connect.sln
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release
     - name: Test
       run: dotnet test --no-restore --verbosity normal
