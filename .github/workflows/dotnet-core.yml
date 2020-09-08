@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-package:
-
+    name: Build the Grasshopper package
     runs-on: windows-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore .\Connect.sln
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
