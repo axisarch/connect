@@ -17,8 +17,8 @@ jobs:
         dotnet-version: '3.1.x'
     - name: Install dependencies
       run: dotnet restore .\Connect.sln
-    - name: Nuget Packages
     - uses: nuget/setup-nuget@v1
+    - name: Nuget Packages
     - run: nuget restore .\Connect.sln
     - name: Build
       run: dotnet build --configuration Release --no-restore
