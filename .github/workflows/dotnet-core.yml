@@ -16,7 +16,7 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     - name: Install dependencies
-      run: dotnet restore .\Connect.sln
+      run: dotnet restore .\Connect\Connect.csproj
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
