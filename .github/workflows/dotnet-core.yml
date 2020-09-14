@@ -16,8 +16,8 @@ jobs:
       with:
         dotnet-version: '3.1.x'
     - name: Install dependencies
-      run: dotnet restore .\Connect.sln -v d
+      run: dotnet restore .\Connect.sln
     - name: Build
-      run: dotnet build --configuration Release --no-restore -v d
+      run: dotnet build --configuration Release --no-restore
 #     - name: Test
 #      run: dotnet test --no-restore --verbosity normal

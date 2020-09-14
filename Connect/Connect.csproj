@@ -12,10 +12,13 @@
     <StartProgram>C:\Program Files\Rhino 6\System\Rhino.exe</StartProgram>
     <OutputPath>C:\Users\psf\AppData\Roaming\Grasshopper\Libraries\Connect\</OutputPath>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Optimize>false</Optimize>
     <DocumentationFile></DocumentationFile>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <WarningsAsErrors>NU1605</WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -71,5 +74,10 @@
   </Target>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="Copy $(TargetPath) $(TargetDir)$(TargetName)&quot;.gha&quot; &amp;&amp; Erase $(TargetPath)" />
+  </Target>
+  <Target Name="PreventGrasshopperCopyLocal" AfterTargets="ResolveReferences">
+  	<ItemGroup>
+  		<ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Grasshopper'" />
+  	</ItemGroup>
   </Target>
 </Project>
