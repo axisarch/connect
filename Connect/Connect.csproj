@@ -34,16 +34,6 @@
     <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Update="System">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <PropertyGroup>
-    <FallbackCulture>en-US</FallbackCulture>
-    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-  </PropertyGroup>
-  <ItemGroup>
     <Content Remove="C:\Users\psf\.nuget\packages\mongodb.driver.core\2.11.2\build\../runtimes/win/native/snappy64.dll" />
   </ItemGroup>
   <ItemGroup>
