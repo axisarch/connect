@@ -32,7 +32,7 @@ namespace Connect.GH_Componnts
               Connect.ConnectInfo.Plugin, Connect.ConnectInfo.Tab)
         {
         }
-
+        #region IO
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
@@ -49,6 +49,8 @@ namespace Connect.GH_Componnts
         {
         }
 
+        #endregion
+
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
@@ -58,8 +60,26 @@ namespace Connect.GH_Componnts
             Grasshopper.Kernel.Data.GH_Structure<IGH_Goo> dataInput = new Grasshopper.Kernel.Data.GH_Structure<IGH_Goo>();
             bool send = false;
 
+            if (user == string.Empty)
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Username missing");
+                return;
+            }
+            if (password == string.Empty)
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Password missing");
+                return;
+            }
+            if (server == string.Empty)
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Server address missing");
+                return;
+            }
+
             if (!DA.GetDataTree<IGH_Goo>(1, out dataInput)) return;
             if (!DA.GetData("Send", ref send)) return;
+
+
 
             GH_IDatabase client;
 
@@ -83,6 +103,66 @@ namespace Connect.GH_Componnts
 
         }
 
+        #region UI
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
+
+            System.Windows.Forms.ToolStripSeparator seperator = Menu_AppendSeparator(menu);
+
+            System.Windows.Forms.ToolStripTextBox userField = new System.Windows.Forms.ToolStripTextBox();
+            userField.Text = this.user.ToString();
+            userField.Name = "Username";
+            userField.ToolTipText = "";
+            userField.TextChanged += OnTextCanged;
+            
+
+            System.Windows.Forms.ToolStripTextBox passwordField = new System.Windows.Forms.ToolStripTextBox();
+            passwordField.Text = this.password.ToString();
+            passwordField.Name = "Password";
+            passwordField.ToolTipText = "";
+            passwordField.TextChanged += OnTextCanged;
+
+            System.Windows.Forms.ToolStripTextBox serverField = new System.Windows.Forms.ToolStripTextBox();
+            serverField.Text = this.server.ToString();
+            serverField.Name = "Server";
+            serverField.ToolTipText = "";
+            serverField.TextChanged += OnTextCanged;
+
+            System.Windows.Forms.ToolStripSeparator seperator2 = Menu_AppendSeparator(menu);
+
+            System.Windows.Forms.ToolStripMenuItem spacingPointsConatiner = Menu_AppendItem(menu, "Login");
+            spacingPointsConatiner.DropDownItems.Add(userField);
+            spacingPointsConatiner.DropDownItems.Add(passwordField);
+            spacingPointsConatiner.DropDownItems.Add(serverField);
+
+
+        }
+
+        private void OnTextCanged(object sender, EventArgs e)
+        {
+            if (typeof(System.Windows.Forms.ToolStripTextBox).IsAssignableFrom(sender.GetType()))
+            {
+                var tB = sender as System.Windows.Forms.ToolStripTextBox;
+
+                switch (tB.Name) 
+                {
+                    case "Username":
+                        this.user = tB.Text;
+                        break;
+                    case "Password":
+                        this.password = tB.Text;
+                        break;
+                    case "Server":
+                        this.server = tB.Text;
+                        break;
+                }
+            }
+
+            ExpireSolution(true);
+        }
+        # endregion
+
+        #region Component Settings
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>
@@ -103,7 +183,9 @@ namespace Connect.GH_Componnts
         {
             get { return new Guid("af9d98ed-d395-430c-81c4-8b84d99e19f5"); }
         }
+        #endregion 
 
+        #region Serialization
         public override bool Write(GH_IO.Serialization.GH_IWriter writer)
         {
             writer.SetString("UserName", this.user);
@@ -119,6 +201,7 @@ namespace Connect.GH_Componnts
             this.server = reader.GetString("Server");
             return base.Read(reader);
         }
+        #endregion
 
     } //Send Data
     public class dbGet : GH_Component
@@ -138,6 +221,7 @@ namespace Connect.GH_Componnts
         {
         }
 
+        #region IO
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
@@ -158,6 +242,7 @@ namespace Connect.GH_Componnts
         {
             pManager.AddGenericParameter("Data", "D", "Data from data base", GH_ParamAccess.tree);
         }
+        #endregion
 
         /// <summary>
         /// This is the method that actually does the work.
@@ -170,7 +255,22 @@ namespace Connect.GH_Componnts
             string ithem = string.Empty;
 
             List<KeyValuePair<string, string>> categorys = new List<KeyValuePair<string, string>>();
-            
+
+            if (user == string.Empty) 
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Username missing");
+                return;
+            }
+            if (password == string.Empty)
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Password missing");
+                return;
+            }
+            if (server == string.Empty)
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Server address missing");
+                return;
+            }
 
             GH_IDatabase client;
 
@@ -205,7 +305,66 @@ namespace Connect.GH_Componnts
             
         }
 
+        #region UI
+        protected override void AppendAdditionalComponentMenuItems(System.Windows.Forms.ToolStripDropDown menu)
+        {
 
+            System.Windows.Forms.ToolStripSeparator seperator = Menu_AppendSeparator(menu);
+
+            System.Windows.Forms.ToolStripTextBox userField = new System.Windows.Forms.ToolStripTextBox();
+            userField.Text = this.user.ToString();
+            userField.Name = "Username";
+            userField.ToolTipText = "";
+            userField.TextChanged += OnTextCanged;
+
+
+            System.Windows.Forms.ToolStripTextBox passwordField = new System.Windows.Forms.ToolStripTextBox();
+            passwordField.Text = this.password.ToString();
+            passwordField.Name = "Password";
+            passwordField.ToolTipText = "";
+            passwordField.TextChanged += OnTextCanged;
+
+            System.Windows.Forms.ToolStripTextBox serverField = new System.Windows.Forms.ToolStripTextBox();
+            serverField.Text = this.server.ToString();
+            serverField.Name = "Server";
+            serverField.ToolTipText = "";
+            serverField.TextChanged += OnTextCanged;
+
+            System.Windows.Forms.ToolStripSeparator seperator2 = Menu_AppendSeparator(menu);
+
+            System.Windows.Forms.ToolStripMenuItem spacingPointsConatiner = Menu_AppendItem(menu, "Login");
+            spacingPointsConatiner.DropDownItems.Add(userField);
+            spacingPointsConatiner.DropDownItems.Add(passwordField);
+            spacingPointsConatiner.DropDownItems.Add(serverField);
+
+
+        }
+
+        private void OnTextCanged(object sender, EventArgs e)
+        {
+            if (typeof(System.Windows.Forms.ToolStripTextBox).IsAssignableFrom(sender.GetType()))
+            {
+                var tB = sender as System.Windows.Forms.ToolStripTextBox;
+
+                switch (tB.Name)
+                {
+                    case "Username":
+                        this.user = tB.Text;
+                        break;
+                    case "Password":
+                        this.password = tB.Text;
+                        break;
+                    case "Server":
+                        this.server = tB.Text;
+                        break;
+                }
+            }
+
+            ExpireSolution(true);
+        }
+        # endregion
+
+        #region Component Settings
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>
@@ -226,7 +385,9 @@ namespace Connect.GH_Componnts
         {
             get { return new Guid("69D21B27-6E63-4A24-97F9-538C93275859"); }
         }
+        #endregion
 
+        #region Serialization
         public override bool Write(GH_IO.Serialization.GH_IWriter writer)
         {
             writer.SetString("UserName", this.user);
@@ -242,6 +403,8 @@ namespace Connect.GH_Componnts
             this.server = reader.GetString("Server");
             return base.Read(reader);
         }
+        #endregion
+
     } //Retreving Data
 }
 
@@ -268,9 +431,14 @@ namespace Connect
         public  GH_MongoClient() { }
         public GH_MongoClient(string userName, string password, string server) 
         {
+            if (userName == string.Empty) return;
+            if (password == string.Empty) return;
+            if (server == string.Empty) return;
+
             this.userName = userName;
             this.password = password;
             this.server = server;
+
             Connect();
         }
 
@@ -289,6 +457,7 @@ namespace Connect
 
         bool Connect() 
         {
+
             this.connectionHandler = new MongoClient($"mongodb+srv://{userName}:{password}@{server}/test?retryWrites=true&w=majority");
             return true;
 
