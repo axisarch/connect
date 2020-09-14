@@ -2,7 +2,7 @@ name: .NET Core
 
 on:
   push:
-    branches: [ ci-test ]
+    branches: [ master, development ]
 
 jobs:
   build-package:
