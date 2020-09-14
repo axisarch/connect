@@ -104,6 +104,22 @@ namespace Connect.GH_Componnts
             get { return new Guid("af9d98ed-d395-430c-81c4-8b84d99e19f5"); }
         }
 
+        public override bool Write(GH_IO.Serialization.GH_IWriter writer)
+        {
+            writer.SetString("UserName", this.user);
+            writer.SetString("UserPassword", this.password);
+            writer.SetString("Server", this.server);
+            return base.Write(writer);
+        }
+
+        public override bool Read(GH_IO.Serialization.GH_IReader reader)
+        {
+            this.user = reader.GetString("UserName");
+            this.password = reader.GetString("UserPassword");
+            this.server = reader.GetString("Server");
+            return base.Read(reader);
+        }
+
     } //Send Data
     public class dbGet : GH_Component
     {
@@ -209,6 +225,22 @@ namespace Connect.GH_Componnts
         public override Guid ComponentGuid
         {
             get { return new Guid("69D21B27-6E63-4A24-97F9-538C93275859"); }
+        }
+
+        public override bool Write(GH_IO.Serialization.GH_IWriter writer)
+        {
+            writer.SetString("UserName", this.user);
+            writer.SetString("UserPassword", this.password);
+            writer.SetString("Server", this.server);
+            return base.Write(writer);
+        }
+
+        public override bool Read(GH_IO.Serialization.GH_IReader reader)
+        {
+            this.user = reader.GetString("UserName");
+            this.password = reader.GetString("UserPassword");
+            this.server = reader.GetString("Server");
+            return base.Read(reader);
         }
     } //Retreving Data
 }
